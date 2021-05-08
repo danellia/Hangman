@@ -30,26 +30,19 @@ namespace Hangman
             {
                 progress[progressIndex] = '_';
             }
-
-            while (progress.Contains('_'))
+            
+            while (progress.Contains('_') && incorrectGuesses < Animate.limbs.Length)
             {
+
                 char playerGuess = char.Parse(Console.ReadLine());
-                for (int guessIndex = 0; guessIndex < currentWord.Length; guessIndex++)
+                for (int guessIndex = 0; guessIndex < currentWord.Length; ++guessIndex)
                 {
-                    if (playerGuess == currentWord[guessIndex])
+                    if (progress[guessIndex] == '_' && currentWord[guessIndex] == playerGuess)
                     {
                         progress[guessIndex] = playerGuess;
                     }
-                    else
-                    {
-                        ++incorrectGuesses;
-                    }
-
                 }
-                if (incorrectGuesses >= Animate.limbs.Length)
-                {
-                    break;
-                }
+                if (!currentWord.Contains(playerGuess)) ++incorrectGuesses;
                 Console.WriteLine(progress);
             }
         }
