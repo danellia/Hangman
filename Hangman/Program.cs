@@ -30,7 +30,7 @@ namespace Hangman
             {
                 progress[progressIndex] = '_';
             }
-            
+
             while (progress.Contains('_') && incorrectGuesses < Animate.limbs.Length)
             {
 
