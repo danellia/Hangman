@@ -22,7 +22,18 @@ namespace Hangman
                         Animate.progress[guessIndex] = playerGuess;
                     }
                 }
-                if (!Words.currentWord.Contains(playerGuess)) ++Animate.incorrectGuesses;
+                if (!Words.currentWord.Contains(playerGuess))
+                {
+                    ++Animate.incorrectGuesses;
+                }
+            }
+            
+            if (Animate.incorrectGuesses >= Animate.limbs.Length)
+            {
+                Animate.Death();
+            } else
+            {
+                Animate.Win();
             }
         }
     }
