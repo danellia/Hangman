@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Hangman
@@ -9,41 +7,22 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
-            List<string> words = new List<string>();
-            using (StreamReader sr = new StreamReader("words.txt"))
+            Words.GetList();
+            Words.ChooseCurrentWord();
+            Animate.FillProgress();
+
+            while (Animate.progress.Contains('_') && Animate.incorrectGuesses < Animate.limbs.Length)
             {
-                while (!sr.EndOfStream)
-                {
-                    string word = sr.ReadLine();
-                    words.Add(word);
-                }
-            }
-            string[] Words = words.ToArray();
-
-            Random rand = new Random();
-            int currentWordIndex = rand.Next(0, Words.Length);
-            string currentWord = Words[currentWordIndex];
-            char[] progress = new char[currentWord.Length];
-            int incorrectGuesses = 0;
-
-            for (int progressIndex = 0; progressIndex < currentWord.Length; ++progressIndex)
-            {
-                progress[progressIndex] = '_';
-            }
-
-            while (progress.Contains('_') && incorrectGuesses < Animate.limbs.Length)
-            {
-
+                Animate.RenderGameState();
                 char playerGuess = char.Parse(Console.ReadLine());
-                for (int guessIndex = 0; guessIndex < currentWord.Length; ++guessIndex)
+                for (int guessIndex = 0; guessIndex < Words.currentWord.Length; ++guessIndex)
                 {
-                    if (progress[guessIndex] == '_' && currentWord[guessIndex] == playerGuess)
+                    if (Animate.progress[guessIndex] == '_' && Words.currentWord[guessIndex] == playerGuess)
                     {
-                        progress[guessIndex] = playerGuess;
+                        Animate.progress[guessIndex] = playerGuess;
                     }
                 }
-                if (!currentWord.Contains(playerGuess)) ++incorrectGuesses;
-                Console.WriteLine(progress);
+                if (!Words.currentWord.Contains(playerGuess)) ++Animate.incorrectGuesses;
             }
         }
     }

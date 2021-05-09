@@ -1,8 +1,50 @@
-﻿
+﻿using System;
+
 namespace Hangman
 {
     public class Animate
     {
+        public static int incorrectGuesses = 0;
+        public static char[] progress = new char[Words.currentWord.Length];
+
+        public static void FillProgress()
+        {
+            for (int progressIndex = 0; progressIndex < Words.currentWord.Length; ++progressIndex)
+            {
+                progress[progressIndex] = '_';
+            }
+        }
+        public static void RenderGameState()
+        {
+            Console.SetCursorPosition(4, 3);
+            Console.CursorLeft = 4;
+            Render(limbs[incorrectGuesses]);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("    Guess: ");
+            foreach (char c in progress)
+            {
+                Console.Write(c + " ");
+            }
+        }
+        public static void Render(string @string)
+        {
+            int x = Console.CursorLeft;
+            int y = Console.CursorTop;
+            foreach (char c in @string)
+            {
+                if (c is '\n')
+                {
+                    Console.WriteLine();
+                    Console.SetCursorPosition(x, ++y);
+                }
+                else
+                {
+                    Console.Write(c);
+                }
+            }
+        }
+
         public static string[] limbs =
         {
             #region frames
