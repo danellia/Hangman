@@ -7,7 +7,7 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
-            //Console.SetWindowSize(40, 15);
+            Console.SetWindowSize(40, 15);
             Words.GetList();
             Words.ChooseCurrentWord();
             Animate.FillProgress();
