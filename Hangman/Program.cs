@@ -7,6 +7,7 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
+            //Console.SetWindowSize(40, 15);
             Words.GetList();
             Words.ChooseCurrentWord();
             Animate.FillProgress();
@@ -14,7 +15,12 @@ namespace Hangman
             while (Animate.progress.Contains('_') && Animate.incorrectGuesses < Animate.limbs.Length)
             {
                 Animate.RenderGameState();
-                char playerGuess = char.Parse(Console.ReadLine());
+                string input = Console.ReadLine();
+                if (input.Length > 1)
+                {
+                    continue;
+                }
+                char playerGuess = char.Parse(input);
                 for (int guessIndex = 0; guessIndex < Words.currentWord.Length; ++guessIndex)
                 {
                     if (Animate.progress[guessIndex] == '_' && Words.currentWord[guessIndex] == playerGuess)
